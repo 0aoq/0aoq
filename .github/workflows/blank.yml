@@ -18,8 +18,24 @@ jobs:
           # Options
           user: 0aoq
           template: classic
-          base: header, repositories, metadata
+          base: header, activity, community, repositories, metadata
           config_timezone: America/New_York
+          plugin_activity: yes
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+          plugin_activity_limit: 5
+          plugin_activity_load: 300
+          plugin_activity_visibility: all
+          plugin_habits: yes
+          plugin_habits_days: 14
+          plugin_habits_facts: yes
+          plugin_habits_from: 200
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
+          plugin_licenses: yes
+          plugin_licenses_legal: yes
           plugin_lines: yes
+          plugin_pagespeed: yes
+          plugin_pagespeed_url: .user.website
+          plugin_projects: yes
+          plugin_projects_limit: 4
