@@ -1,6 +1,8 @@
-### Hi!
+### Hi, I'm 0aoq
 
-I'm 0aoq, I do things on github sometimes occasionally. Thanks for reading this, bye!
+I have a lot of older private repositories, but I'm trying to create a lot more public repositories so I can share newer open source ideas!
+
+![Metrics](https://metrics.lecoq.io/0aoq?template=classic&base.activity=0&base.community=0&isocalendar=1&lines=1&isocalendar.duration=half-year&config.timezone=America%2FNew_York)
 
 <!--
 **0aoq/0aoq** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
