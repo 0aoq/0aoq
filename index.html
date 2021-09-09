@@ -1,0 +1,26 @@
+<!-- Redirect to project pages under 0aoq.github.io/0aoq -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting</title>
+</head>
+
+<body>
+    Redirecting to url...
+
+    <script>
+        const id = window.location.href.slice(1)
+        if (id) {
+            window.location = "https://0aoq.github.io/0aoq/projects/" + id
+        } else {
+            window.location = "https://github.com/0aoq"
+        }
+    </script>
+</body>
+
+</html>
