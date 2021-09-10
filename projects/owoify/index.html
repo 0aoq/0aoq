@@ -1,0 +1,32 @@
+<!-- converts all Rs and Ls in a sentence to Ws -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0aoq/owoify</title>
+</head>
+
+<body>
+    <textarea placeholder="text1" id="text" style="width: 50vw; height: 40vh;"></textarea>
+    <br>
+    <button id="submit">Submit</button>
+    <br>
+    <textarea placeholder="result" disabled id="result" style="width: 50vw; height: 40vh;"></textarea>
+
+    <script>
+        let text = document.getElementById("text")
+        let submit = document.getElementById("submit")
+        let result = document.getElementById("result")
+
+        var $result = ""
+        submit.addEventListener('click', () => {
+            result.value += `\n${text.value.replace(/r/g,"w").replace(/l/g,"w").replace(/R/g,"W").replace(/L/g,"W")}`
+        })
+    </script>
+</body>
+
+</html>
