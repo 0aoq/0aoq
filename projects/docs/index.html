@@ -60,22 +60,14 @@
         }
 
         document.title = window.location.search.slice(1)
+        document.querySelector(".pagetitle").innerText = window.location.search.slice(1)
 
         const id = window.location.search.slice(1)
         const arr = id.split("/")
 
-        let last
-        let _last = arr[arr.indexOf(last) - 1] + "/" + last
-
         if (id.split(".").includes("md")) {
             document.getElementById("mdbox").innerHTML += `
 <zero-md src="${id}" no-shadow="true"></zero-md>`
-
-            if (_last) {
-                document.querySelector(".pagetitle").innerText = _last
-            } else {
-                document.querySelector(".pagetitle").innerText = window.location.search.slice(1)
-            }
         }
     </script>
 
