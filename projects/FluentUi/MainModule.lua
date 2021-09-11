@@ -3,6 +3,8 @@ local _0aoq_fluent = {}; do
         name = "FluentUi",
         author = "0a_oq"
     }
+    
+    local CLASS_NAME = "FLUENT_UI_CLASS"
 
     -- types
 
@@ -20,17 +22,25 @@ local _0aoq_fluent = {}; do
 
     -- module
     local internal = {}; do
+        internal.styleSheet = {}
+
         -- table of all values WITH A FUNCTION TO CALL
-        internal.styles = {"BorderRadius", "isFlex", "BoxShadow"}
+        internal.styles = {"BorderRadius", "isFlex", "BoxShadow", "Padding"}
 
         -- style functions
         internal.styleValues = {}; do
             internal.styleValues.isFlex = function(component, style) -- @fluent_style:isFlex
-                local UiListLayout = Instance.new("UIListLayout", component)
-                UiListLayout.HorizontalAlignment = Enum.HorizontalAlignment[style.alignX]
-                UiListLayout.VerticalAlignment = Enum.VerticalAlignment[style.alignY]
-                UiListLayout.SortOrder = Enum.SortOrder[style.flexOrder]
-                UiListLayout.Padding = UDim.new(style.flexPadding or 0, 0)
+                style.flexOrder = style.flexOrder or "Name"; style.alignX = style.alignX or "Left"
+                style.alignY = style.alignY or "Top"; style.flexPadding = style.flexPadding or 0
+
+                if (not component:FindFirstChild("FLUENT_LIST_LAYOUT")) then
+                    local UiListLayout = Instance.new("UIListLayout", component)
+                    UiListLayout.Name = "FLUENT_LIST_LAYOUT"
+                    UiListLayout.HorizontalAlignment = Enum.HorizontalAlignment[style.alignX]
+                    UiListLayout.VerticalAlignment = Enum.VerticalAlignment[style.alignY]
+                    UiListLayout.SortOrder = Enum.SortOrder[style.flexOrder]
+                    UiListLayout.Padding = UDim.new(style.flexPadding or 0, 0)
+                end
             end; internal.styleValues.BoxShadow = function(component, style) -- @fluent_style:BoxShadow
                 local frame = Instance.new("Frame", component.Parent)
                 component.Parent = frame
@@ -77,33 +87,27 @@ local _0aoq_fluent = {}; do
                 frame.ZIndex = component.ZIndex
             end; internal.styleValues.BorderRadius = function(component, style) -- @fluent_style:BorderRadius
                 Instance.new("UICorner", component).CornerRadius = UDim.new(style.BorderRadius or 0, 0)
+            end; internal.styleValues.padding = function(component, style)
+                local tempInstance = Instance.new("UIPadding", component); do
+                    tempInstance.PaddingTop = UDim.new(style.PaddingTop, 0)
+                    tempInstance.PaddingBottom = UDim.new(style.PaddingBottom, 0)
+
+                    tempInstance.PaddingLeft = UDim.new(style.PaddingLeft, 0)
+                    tempInstance.PaddingRight = UDim.new(style.PaddingRight, 0)
+                end
             end
         end
 
         internal.styleComponent = function(component, style)
-            for _,x in pairs(style) do
-                if (x.Name == component:GetAttribute("FLUENT_UI_CLASS")) then
-                    style = x[1]
-                end
-            end; style = style[1]
-            
+            if (style == nil) then return end
+
             -- Styles
-                        
-            style.Background = style.Background or Color3.fromRGB(255, 255, 255)
-
-            if (style.Background == "rebeccapurple") then
-                style.Background = Color3.fromRGB(102, 51, 153)
-            end
-
-            if (style.color == "rebeccapurple") then
-                style.color = Color3.fromRGB(102, 51, 153)
-            end
 
             component.BackgroundColor3 = style.Background or component.BackgroundColor3
-            component.BackgroundTransparency = style.Opacity or component.BackgroundTransparency
             component.Position = style.pos or component.Position
             component.Name = style.name or component.Name
-            
+            component.BackgroundTransparency = style.Opacity or component.BackgroundTransparency
+
             if (style.sizeX and style.sizeY) then -- set size
                 component.Size = UDim2.new(style.sizeX , 0, style.sizeY, 0)
             end
@@ -111,7 +115,7 @@ local _0aoq_fluent = {}; do
             component.Visible = not style.hidden or not false
 
             for _,x in pairs(internal.styles) do
-                if (style[x]) then internal.styleValues[x](component, style) end
+                if (style[x] == true) then internal.styleValues[x](component, style) end
             end
 
             -- @this Handle button specific properties
@@ -159,35 +163,24 @@ local _0aoq_fluent = {}; do
     end
 
     _0aoq_fluent.client = {}; do
-        internal.styleSheet = nil
         internal.renderedContainers = {}
         internal.components = {}
-        
+
         _0aoq_fluent.bin = {}; do
             _0aoq_fluent.bin.getStyle = function(name: string)
-                for _,x in pairs(internal.styleSheet) do
-                    if (x.Name == name) then
-                        return x
-                    end
-                end
+                return internal.styleSheet[name]
             end
         end
-        
+
         internal.scanContainer = function(container, styles, isComponent: boolean)
-            wait(0.01)
             if (styles ~= internal.styleSheet) then
-                if (internal.styleSheet == nil) then internal.styleSheet = styles end
-
-                if (internal.styleSheet ~= nil) then 
-                    if (isComponent) then table.insert(internal.styleSheet, 1, styles) end
-                end
-
+                -- if (isComponent) then table.insert(internal.styleSheet, 1, styles) end
                 table.insert(internal.renderedContainers, 1, container)
             end
 
             for _,component in pairs(container:GetDescendants()) do
                 if (not component:IsA("LocalScript")) then
-                    internal.styleComponent(component, internal.styleSheet)
+                    internal.styleComponent(component, _0aoq_fluent.bin.getStyle(component:GetAttribute(CLASS_NAME)))
                 end
             end
         end
@@ -226,9 +219,8 @@ local _0aoq_fluent = {}; do
 
                 for _,x in pairs(internal.renderedContainers) do
                     internal.components[component.Name] = component
-                    table.insert(internal.styleSheet, component.Styles)
-                    
-                    wait(0.01)
+                    internal.styleSheet[component.Name] = component.Styles
+
                     internal.scanContainer(x, internal.styleSheet, true)
                 end
             end
@@ -242,7 +234,11 @@ local _0aoq_fluent = {}; do
                 __.Name = componentConfig.name or "FLUENT_COMPONENT:" .. componentConfig.type
                 __:SetAttribute("FLUENT_UI_CLASS", componentConfig.componentName)
 
-                internal.scanContainer(componentConfig.container, _0aoq_fluent.bin.getStyle(componentConfig.name))
+                local style = _0aoq_fluent.bin.getStyle(componentConfig.name)
+                internal.scanContainer(componentConfig.container, style, true)
+                internal.styleComponent(__, style)
+
+                return __
             end
 
             _0aoq_fluent.client.components.removeComponent = function(componentName: string)
@@ -253,5 +249,11 @@ local _0aoq_fluent = {}; do
                 end
             end
         end
+    end
+    -- /// END SECTION: component handling
+
+    _0aoq_fluent.client.test = function()
+        local function ENCODE(json) return game:GetService("HttpService"):JSONEncode(json) end
+        return ENCODE(internal.styleSheet), ENCODE(internal.components)
     end
 end; return _0aoq_fluent
