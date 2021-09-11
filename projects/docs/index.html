@@ -40,8 +40,7 @@
         <nav class="pad-full-1_2 box-shadow text-center mb-50px ui-fixed-nav">
             <div class="flex flex-just-center" style="gap: 1.5em;">
                 <a class="text small pagetitle" href="index.html">Error 404 - Return Home</a>
-                <a class="text small" href="?md/index.md">Home</a>
-                <a class="text small" href="?md/changelog.md">Change Log</a>
+                <a class="text small" href="?../../README.md">Home</a>
             </div>
         </nav>
 
@@ -56,7 +55,7 @@
 
     <script>
         if (!window.location.search.slice(1)) {
-            window.location = "?md/index.md"
+            window.location = "?../../README.md"
         }
 
         document.title = `Viewing ${window.location.search.slice(1)} - [0aoq/docs]`
