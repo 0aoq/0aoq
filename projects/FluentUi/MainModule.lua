@@ -155,11 +155,11 @@ local _0aoq_fluent = {}; do
             -- @this Handle text related properties
             style.fontFamily = style.fontFamily or "SourceSans"
             if (component:IsA("TextLabel") or component:IsA("TextButton")) then
-                component.RichText = style.rich or component.RichText
-                component.Text = style.content or component.Text
-                component.TextScaled = style.scaledText or component.TextScaled
-                component.TextColor3 = style.color or component.TextColor3
-                component.Font = Enum.Font[style.fontFamily]
+                component.RichText = style.isRichText or component.RichText
+                component.Text = style.Content or component.Text
+                component.TextScaled = style.ScaledFont or component.TextScaled
+                component.TextColor3 = style.Color or component.TextColor3
+                component.Font = Enum.Font[style.FontFamily]
             end
 
             -- Events
