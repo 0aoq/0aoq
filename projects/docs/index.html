@@ -65,7 +65,8 @@
         const id = window.location.search.slice(1)
         const arr = id.split("/")
 
-        if (id.split(".").includes("md")) {
+        const return_pages = ["404"]
+        if (id.split(".").includes("md") || return_pages.includes(id)) {
             document.getElementById("mdbox").innerHTML += `
 <zero-md src="${id}" no-shadow="true"></zero-md>`
         }
