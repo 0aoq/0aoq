@@ -7,10 +7,63 @@ local _0aoq_fluent = {}; do
     local CLASS_NAME = "FLUENT_UI_CLASS"
 
     -- types
+    
+    export type fluent_interface = { -- allow for auto complete while styling classes
+        -- any
+        BorderRadius: number,
+        sizeX: number,
+        sizeY: number,
+        Pos: UDim2,
+        Background: Color3,
+        Opacity: number,
+        Name: string,
+        hidden: boolean,
+        autoColor: boolean,
+
+        -- flex
+        isFlex: boolean,
+        alignX: string,
+        alignY: string,
+        flexOrder: string,
+        flexPadding: number,
+
+        -- boxshadow
+        BoxShadow: boolean,
+        boxShadowStyle: number,
+        boxShadowAlpha: number,
+
+        -- padding
+        Padding: boolean,
+        PaddingTop: number,
+        PaddingBottom: number,
+        PaddingLeft: number,
+        PaddingRight: number,
+
+        -- border
+        Border: boolean,
+        BorderColor: Color3,
+        BorderThickness: number,
+        BorderOpacity: number,
+        BorderJoinMode: string,
+        BorderApplyMode: string,
+
+        -- text
+        Content: string,
+        FontFamily: string | Enum.Font,
+        Color: Color3,
+        isRichText: boolean,
+        ScaledFont: boolean,
+
+        -- events
+        onhover: any,
+        onunhover: any,
+        active: any,
+        run: any
+    }
 
     export type fluent_component = {
         Name: string,
-        Styles: {}
+        Styles: fluent_interface
     }
 
     export type fluent_component_config = {
@@ -122,14 +175,14 @@ local _0aoq_fluent = {}; do
             end
         end
 
-        internal.styleComponent = function(component, style)
+        internal.styleComponent = function(component, style: fluent_interface)
             if (style == nil) then return end
 
             -- Styles
 
             component.BackgroundColor3 = style.Background or component.BackgroundColor3
-            component.Position = style.pos or component.Position
-            component.Name = style.name or component.Name
+            component.Position = style.Pos or component.Position
+            component.Name = style.Name or component.Name
             component.BackgroundTransparency = style.Opacity or component.BackgroundTransparency
 
             if (style.sizeX and style.sizeY) then -- set size
@@ -148,18 +201,26 @@ local _0aoq_fluent = {}; do
 
             -- @this Handle button specific properties
             if (component:IsA("TextButton")) then
-                component.MouseButton1Click:Connect(style.active or function() end)
-                component.AutoButtonColor = style.autoColor
+                component.MouseButton1Click:Connect(function()
+                    if (style.active) then coroutine.wrap(style.active)(component, style); end
+                end)
+                
+                component.AutoButtonColor = style.autoColor or false
             end
 
             -- @this Handle text related properties
-            style.fontFamily = style.fontFamily or "SourceSans"
+            style.FontFamily = style.FontFamily or "SourceSans"
             if (component:IsA("TextLabel") or component:IsA("TextButton")) then
                 component.RichText = style.isRichText or component.RichText
                 component.Text = style.Content or component.Text
                 component.TextScaled = style.ScaledFont or component.TextScaled
                 component.TextColor3 = style.Color or component.TextColor3
-                component.Font = Enum.Font[style.FontFamily]
+                
+                if (typeof(style.FontFamily) == "string") then
+                    component.Font = Enum.Font[style.FontFamily]
+                else
+                    component.Font = style.FontFamily
+                end
             end
 
             -- Events
@@ -174,14 +235,6 @@ local _0aoq_fluent = {}; do
                 component.MouseLeave:Connect(function()
                     coroutine.wrap(style.onunhover)(component)
                 end)
-            end
-
-            if (style.active) then
-                if component:IsA("TextButton") then
-                    component.MouseButton1Click:Connect(function()
-                        coroutine.wrap(style.active)(component, style)
-                    end)
-                end
             end
 
             if (style.run) then
@@ -205,7 +258,8 @@ local _0aoq_fluent = {}; do
                 -- if (isComponent) then table.insert(internal.styleSheet, 1, styles) end
                 table.insert(internal.renderedContainers, 1, container)
             end
-
+            
+            if (container == nil) then return warn("[Fluent]: Components cannot be mounted onto null containers") end
             for _,component in pairs(container:GetDescendants()) do
                 if (not component:IsA("LocalScript")) then
                     internal.styleComponent(component, _0aoq_fluent.bin.getStyle(component:GetAttribute(CLASS_NAME)))
@@ -213,7 +267,10 @@ local _0aoq_fluent = {}; do
             end
         end
 
-        _0aoq_fluent.render = function(container, styles) internal.scanContainer(container, styles, false) end
+        _0aoq_fluent.mount = function(container, styles) 
+            styles = styles or {}
+            internal.scanContainer(container, styles, false) 
+        end
 
         -- @function Returns a table of all elements that match a className
         _0aoq_fluent.getElementsByClassName = function(container, className)
@@ -254,18 +311,20 @@ local _0aoq_fluent = {}; do
             end
 
             _0aoq_fluent.client.components.addComponent = function(
-                componentConfig: fluent_component_config
+                componentConfig: fluent_component_config,
+                interface_function: any
             )
                 if (not internal.styleSheet) then return warn("[Fluent]: Styles have not been rendered!") end
 
                 local __ = Instance.new(componentConfig.type, componentConfig.container)
                 __.Name = componentConfig.name or "FLUENT_COMPONENT:" .. componentConfig.type
                 __:SetAttribute("FLUENT_UI_CLASS", componentConfig.componentName)
+                if (interface_function) then interface_function(__); end
 
                 local style = _0aoq_fluent.bin.getStyle(componentConfig.name)
                 internal.scanContainer(componentConfig.container, style, true)
                 internal.styleComponent(__, style)
-
+                
                 return __
             end
 

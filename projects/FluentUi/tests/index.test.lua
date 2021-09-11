@@ -1,10 +1,6 @@
 local Fluent = require(game.ReplicatedStorage.FluentUi)
 
-Fluent.render(script.Parent, {
-    test = {
-        BorderRadius = UDim.new(1, 0)
-    }
-})
+Fluent.mount(script.Parent)
 
 -- style components
 
