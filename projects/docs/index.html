@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+
+    <style>
+        #ui-js__loading-screen {
+            background: #151515;
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            left: 0;
+            right: 0;
+            transition: all 0.2s;
+            z-index: 1000;
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4 {
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="styles/codeglow.css">
+
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+</head>
+
+<body class="ui-js">
+    <div id="ui-js__loading-screen"></div>
+
+    <div id="ui-js__main-content">
+        <nav class="pad-full-1_2 box-shadow text-center mb-50px ui-fixed-nav">
+            <div class="flex flex-just-center" style="gap: 1.5em;">
+                <a class="text small pagetitle" href="index.html">Error 404 - Return Home</a>
+                <a class="text small" href="?md/index.md">Home</a>
+                <a class="text small" href="?md/changelog.md">Change Log</a>
+            </div>
+        </nav>
+
+        <div class="flex flex-just-center mt-125px">
+            <div class="wd-full" id="mdbox">
+                <!-- <div class="card onhover select box-shadow maxcontent mb-25px active" style="width: 100%;">
+                    <span>warning text</span>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (!window.location.search.slice(1)) {
+            window.location = "?md/index.md"
+        }
+
+        document.title = window.location.search.slice(1)
+        document.querySelector(".pagetitle").innerText = window.location.search.slice(1)
+
+        const id = window.location.search.slice(1)
+
+        if (id.split("/").includes("md")) {
+            document.getElementById("mdbox").innerHTML += `
+<zero-md src="${id}" no-shadow="true"></zero-md>`
+        }
+    </script>
+
+    <script src="styles/ui.js" ui-autorender></script>
+
+</body>
+
+</html>

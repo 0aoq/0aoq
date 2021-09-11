@@ -1,0 +1,225 @@
+/* html,
+body {
+    height: 100vh;
+} */
+
+.ui-js {
+    margin: 0;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    background: #fff;
+}
+
+.ui-js .container {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: max-content;
+}
+
+.ui-js .container.fixed {
+    width: 25vw;
+}
+
+@media screen and (max-width: 500px) {
+    .ui-js .container {
+        width: 80vw;
+    }
+}
+
+.ui-js input {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    color: #f9f9f9;
+    width: 100%;
+    border-radius: 0.2rem;
+    background: rgba(245, 248, 255, 0.05);
+    border: 0.15rem solid transparent;
+    width: 100%;
+    padding: 15px 23px;
+    margin: 8px 0 8px 0;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.ui-js input::selection {
+    background: #7a7a7a56;
+}
+
+.ui-js input:hover {
+    border-color: rgba(255, 245, 245, 0.2);
+}
+
+.ui-js input::placeholder {
+    color: #393838;
+    user-select: none;
+}
+
+.ui-js input:hover {
+    border-color: #ff4747;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+.ui-js input:focus {
+    border-color: #ff4747;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+.ui-js input:disabled:hover {
+    border-color: #4e4e4e;
+    cursor: text;
+    box-shadow: 0 0 0 0.4rem rgba(66, 68, 78, 0.15);
+}
+
+.ui-js textarea {
+    font-family: "Open Sans", sans-serif;
+    color: #f9f9f9;
+    width: 100%;
+    border-radius: 0.2rem;
+    background: rgba(245, 248, 255, 0.05);
+    border: 0.15rem solid transparent;
+    width: 100%;
+    padding: 15px 23px;
+    margin: 8px 0 8px 0;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    resize: vertical;
+}
+
+.ui-js textarea::selection {
+    background: #7a7a7a56;
+}
+
+.ui-js textarea:hover {
+    border-color: rgba(245, 248, 255, 0.2);
+}
+
+.ui-js textarea::placeholder {
+    color: #393838;
+    user-select: none;
+}
+
+.ui-js textarea:hover {
+    border-color: #ff4747;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+.ui-js textarea:focus {
+    border-color: #ff4747;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+.ui-js textarea:disabled:hover {
+    border-color: #4e4e4e;
+    cursor: text;
+    box-shadow: 0 0 0 0.4rem rgba(66, 68, 78, 0.15);
+}
+
+.ui-js select {
+    font-family: "Open Sans", sans-serif;
+    color: #f9f9f9;
+    width: 100%;
+    border-radius: 0.2rem;
+    background: rgba(245, 248, 255, 0.05);
+    border: 0.15rem solid transparent;
+    width: 100%;
+    padding: 15px 23px;
+    margin: 8px 0 8px 0;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    resize: vertical;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.ui-js select::selection {
+    background: #7a7a7a56;
+}
+
+.ui-js select:hover {
+    border-color: rgba(245, 248, 255, 0.2);
+}
+
+.ui-js select::placeholder {
+    color: #393838;
+    user-select: none;
+}
+
+.ui-js select:hover {
+    border-color: #ff4747;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+.ui-js select:focus {
+    border-color: #ff4747;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+.ui-js select:disabled:hover {
+    border-color: #4e4e4e;
+    cursor: text;
+    box-shadow: 0 0 0 0.4rem rgba(66, 68, 78, 0.15);
+}
+
+.ui-js select::-ms-expand {
+    display: none;
+}
+
+
+/* Button */
+
+.ui-js button {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: 1rem;
+    user-select: none;
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    border-radius: 0.2rem;
+    background: #ff4747;
+    border: 0.15rem solid transparent;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.ui-js button:hover {
+    border-color: #ff4747;
+    background: #d33d3d;
+    box-shadow: 0 0 0 0.4rem rgba(255, 71, 71, 0.15);
+}
+
+
+/* Card */
+
+.ui-js .card {
+    padding: 15px 23px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 0.2rem;
+    background: #fff;
+    color: black;
+    text-decoration: none;
+    transition: background 0.2s;
+    width: 20vw;
+    word-break: break-all;
+    z-index: 0;
+}
+
+.ui-js .card.maxcontent {
+    width: max-content;
+}
+
+.ui-js a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.ui-js a:hover {
+    color: #5c5c5c;
+}
