@@ -1,3 +1,5 @@
+local TweenService = game:GetService("TweenService")
+
 local _0aoq_fluent = {}; do
     _G.FluentUi = {
         name = "FluentUi",
@@ -86,7 +88,28 @@ local _0aoq_fluent = {}; do
     })
 
     local internal = {}; do
-        internal.styleSheet = {}
+        internal.styleSheet = {
+            FluentButton = {
+                Background = Color3.fromRGB(255, 255, 255);
+                BorderRadius = 0.15;
+                BoxShadow = true;
+                ScaledFont = true;
+
+                sizeX = 0.15;
+                sizeY = 0.03;
+
+                active = function(self)
+                    TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0.2}):Play()
+                    wait(0.04); TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0.1}):Play()
+                end,
+
+                onhover = function(self)
+                    TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0.1}):Play()
+                end, onunhover = function(self)
+                    TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0}):Play()
+                end,
+            }
+        }
 
         -- table of all values WITH A FUNCTION TO CALL
         internal.styles = {"BorderRadius", "isFlex", "BoxShadow", "Padding", "Border"}
@@ -269,7 +292,7 @@ local _0aoq_fluent = {}; do
 
         _0aoq_fluent.mount = function(container, styles) 
             styles = styles or {}
-            internal.scanContainer(container, styles, false) 
+            internal.scanContainer(container, styles, false)
         end
 
         -- @function Returns a table of all elements that match a className
@@ -309,23 +332,25 @@ local _0aoq_fluent = {}; do
                     internal.scanContainer(x, internal.styleSheet, true)
                 end
             end
-
+           
             _0aoq_fluent.client.components.addComponent = function(
                 componentConfig: fluent_component_config,
                 interface_function: any
             )
                 if (not internal.styleSheet) then return warn("[Fluent]: Styles have not been rendered!") end
 
-                local __ = Instance.new(componentConfig.type, componentConfig.container)
-                __.Name = componentConfig.name or "FLUENT_COMPONENT:" .. componentConfig.type
-                __:SetAttribute("FLUENT_UI_CLASS", componentConfig.componentName)
-                if (interface_function) then interface_function(__); end
+                task.spawn(function()
+                    local __ = Instance.new(componentConfig.type, componentConfig.container)
+                    __.Name = componentConfig.name or "FLUENT_COMPONENT:" .. componentConfig.type
+                    __:SetAttribute("FLUENT_UI_CLASS", componentConfig.componentName)
+                    if (interface_function) then interface_function(__); end
 
-                local style = _0aoq_fluent.bin.getStyle(componentConfig.name)
-                internal.scanContainer(componentConfig.container, style, true)
-                internal.styleComponent(__, style)
-                
-                return __
+                    local style = _0aoq_fluent.bin.getStyle(componentConfig.name)
+                    internal.scanContainer(componentConfig.container, style, true)
+                    internal.styleComponent(__, style)
+
+                    return __
+                end)
             end
 
             _0aoq_fluent.client.components.removeComponent = function(componentName: string)
