@@ -53,3 +53,32 @@ Every value has a default that will be used if it is not set.
 - onhover: **function(self)** fires when the mouse enters the component
 - onunhover: **function(self)** fires when the mouse exits the component
 - run: **function(script, self)** runs a localscript on the client from the component 
+
+## Defaults
+
+Below is the default style sheet included in FluentUi. All defined styles can be overwritten.
+
+```js
+{
+    FluentButton = {
+        Background = Color3.fromRGB(255, 255, 255);
+        BorderRadius = 0.15;
+        BoxShadow = true;
+        ScaledFont = true;
+
+        sizeX = 0.15;
+        sizeY = 0.03;
+
+        active = function(self)
+            TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0.2}):Play()
+            wait(0.04); TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0.1}):Play()
+        end,
+
+        onhover = function(self)
+            TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0.1}):Play()
+        end, onunhover = function(self)
+            TweenService:Create(self, TweenInfo.new(0.05), {BackgroundTransparency = 0}):Play()
+        end,
+    }
+}
+```

@@ -59,7 +59,7 @@
             window.location = "?md/index.md"
         }
 
-        document.title = window.location.search.slice(1)
+        document.title = `Viewing ${window.location.search.slice(1)} - [0aoq/docs]`
         document.querySelector(".pagetitle").innerText = window.location.search.slice(1)
 
         const id = window.location.search.slice(1)
