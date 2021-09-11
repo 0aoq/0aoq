@@ -32,6 +32,11 @@ Fluent.client.components.createComponent({
 
         sizeX = 0.1;
         sizeY = 0.2;
+        
+        Border = true;
+        BorderThickness = 5;
+        BorderOpacity = 0.5;
+        BorderColor = Color3.fromRGB(10, 161, 255)
     }
 })
 
