@@ -6,20 +6,46 @@ Fluent.render(script.Parent, {
     }
 })
 
+-- style components
+
+Fluent.client.components.createComponent({
+    Name = "align",
+    Styles = {
+        sizeX = 1;
+        sizeY = 1;
+        pos = UDim2.new(0, 0, 0, 0);
+        Opacity = 1;
+
+        isFlex = true;
+        alignX = "Center";
+        alignY = "Center",
+    }
+})
+
 Fluent.client.components.createComponent({
     Name = "mainGui",
     Styles = {
         Background = Color3.fromRGB(255, 255, 255);
-        BorderRadius = UDim.new(0.1, 0);
+        BorderRadius = 0.05;
         pos = UDim2.new(0, 0, 0, 0);
-        
+        BoxShadow = true;
+
         sizeX = 0.1;
-        sizeY = 0.2
+        sizeY = 0.2;
     }
 })
 
-Fluent.client.components.addComponent({
-    componentName = "mainGui",
+-- add components
+
+local app = Fluent.client.components.addComponent({
+    componentName = "align",
     type = "Frame",
     container = script.Parent
+})
+
+Fluent.client.components.addComponent({
+    name = "gui",
+    componentName = "mainGui",
+    type = "Frame",
+    container = app
 })
