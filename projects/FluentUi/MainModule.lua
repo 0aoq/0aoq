@@ -3,7 +3,7 @@ local _0aoq_fluent = {}; do
         name = "FluentUi",
         author = "0a_oq"
     }
-    
+
     local CLASS_NAME = "FLUENT_UI_CLASS"
 
     -- types
@@ -21,11 +21,22 @@ local _0aoq_fluent = {}; do
     }
 
     -- module
+    local util = {}; do
+        util.PrintLines = function(lines: {string}) for _,x in pairs(lines) do print(x); end end
+    end
+
+    util.PrintLines({
+        "===== 0aoq/FluentUi =====",
+        "Render stream started!   ",
+        "Components registered!   ",
+        "===== 0aoq/FluentUi ====="
+    })
+
     local internal = {}; do
         internal.styleSheet = {}
 
         -- table of all values WITH A FUNCTION TO CALL
-        internal.styles = {"BorderRadius", "isFlex", "BoxShadow", "Padding"}
+        internal.styles = {"BorderRadius", "isFlex", "BoxShadow", "Padding", "Border"}
 
         -- style functions
         internal.styleValues = {}; do
@@ -87,13 +98,26 @@ local _0aoq_fluent = {}; do
                 frame.ZIndex = component.ZIndex
             end; internal.styleValues.BorderRadius = function(component, style) -- @fluent_style:BorderRadius
                 Instance.new("UICorner", component).CornerRadius = UDim.new(style.BorderRadius or 0, 0)
-            end; internal.styleValues.padding = function(component, style)
+            end; internal.styleValues.Padding = function(component, style)
                 local tempInstance = Instance.new("UIPadding", component); do
                     tempInstance.PaddingTop = UDim.new(style.PaddingTop, 0)
                     tempInstance.PaddingBottom = UDim.new(style.PaddingBottom, 0)
 
                     tempInstance.PaddingLeft = UDim.new(style.PaddingLeft, 0)
                     tempInstance.PaddingRight = UDim.new(style.PaddingRight, 0)
+                end
+            end; internal.styleValues.Border = function(component, style)
+                local tempInstance = Instance.new("UIStroke", component); do
+                    style.BorderApplyMode = style.BorderApplyMode or "Contextual"
+                    style.BorderJoinMode = style.BorderJoinMode or "Round"
+                    
+                    tempInstance.ApplyStrokeMode = Enum.ApplyStrokeMode[style.BorderApplyMode]
+                    tempInstance.Thickness = style.BorderThickness or 1
+                    tempInstance.Transparency = style.BorderOpacity or 0
+                    tempInstance.Color = style.BorderColor or Color3.fromRGB(0, 0, 0)
+                    tempInstance.LineJoinMode = Enum.LineJoinMode[style.BorderJoinMode]
+                    
+                    tempInstance.Name = "FLUENT_UI_STROKE"
                 end
             end
         end
@@ -115,7 +139,11 @@ local _0aoq_fluent = {}; do
             component.Visible = not style.hidden or not false
 
             for _,x in pairs(internal.styles) do
-                if (style[x] == true) then internal.styleValues[x](component, style) end
+                if (style[x] == true or
+                    typeof(style[x]) == "number")
+                then 
+                    internal.styleValues[x](component, style) 
+                end
             end
 
             -- @this Handle button specific properties
