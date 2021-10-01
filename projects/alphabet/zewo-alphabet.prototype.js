@@ -34,18 +34,20 @@ class ZewoAlphabet {
         this.illegal = `<>0123456789![](){}';:/$.,=-+*&^%$#@~"'| \n\r`
         this.checkIllegal = function(string) { return this.illegal.includes(string) }
 
-        this.getLetter = function(l) {
+        this.getLetter = function(l, reverse = false) {
             // return a letter.to value from a letter.from
             for (let letter of alphabet) {
                 if (!this.checkIllegal(l)) {
-                    if (letter.from === l) { return letter.to }
+                    if (!reverse) { if (letter.from === l) { return letter.to } } else {
+                        if (letter.to.replaceAll("'", "") === l) { return letter.from }
+                    }
                 } else {
                     return l
                 }
             }
         }
 
-        this.parse = function(string) {
+        this.parse = function(string, decode = false) {
             let str = []
 
             // put all letters into an array
@@ -56,7 +58,8 @@ class ZewoAlphabet {
 
             for (let l of str) {
                 // replace letter
-                let $ = this.getLetter(l.toString().toLowerCase()) || ""
+                let $ = this.getLetter(l.toString().toLowerCase(), decode) || ""
+                if (decode) { $ = $.replaceAll("'", "") } // remove leftover ' from decoded
                 if (l === l.toUpperCase()) { string += $.toUpperCase() } else { string += $ }
             }
 

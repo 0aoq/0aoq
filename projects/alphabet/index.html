@@ -15,7 +15,7 @@
 <body>
     <p>Decoding is not operational, please decode by learning the alphabet.</p>
 
-    <textarea id="input"></textarea><br><button id="submit">Encode</button><br><textarea id="output" disabled></textarea>
+    <textarea id="input"></textarea><br><button id="submit">Encode</button><button id="submit1">Decode</button><br><textarea id="output" disabled></textarea>
 
     <article style="margin-top: 50px;">
         <b>Key:</b>
@@ -33,6 +33,10 @@
         let __ = new ZewoAlphabet()
         document.getElementById("submit").addEventListener("click", () => {
             document.getElementById("output").value = __.parse(document.getElementById("input").value)
+        })
+
+        document.getElementById("submit1").addEventListener("click", () => {
+            document.getElementById("output").value = __.parse(document.getElementById("input").value, true)
         })
     </script>
 </body>
