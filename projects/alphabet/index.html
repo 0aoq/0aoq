@@ -5,17 +5,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZEWO ALPHABET TRANSLATOR</title>
+    <title>0aoq/Alphabet</title>
 
     <style>
+        textarea {
+            width: 25em;
+            height: 8em;
+            padding: .5em;
+            outline: none;
+            background: white !important;
+            resize: vertical;
+            border: none;
+            -webkit-box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1), 0 3px 5px 0 rgba(0, 0, 0, 0.05), 0 0.5px 9px 0 rgba(0, 0, 0, 0.13);
+            box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1), 0 3px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 9px 0 rgba(0, 0, 0, 0.13);
+        }
 
+        @media screen and (max-width: 338px) {
+            textarea {
+                width: 15em !important;
+            }
+        }
+        
+        button {
+            border: none;
+            outline: none;
+            padding: .5em;
+            border-radius: .2em;
+            background: whitesmoke;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            padding-left: .8em;
+            padding-right: .8em;
+        }
     </style>
 </head>
 
 <body>
     <p>Decoding is not operational, please decode by learning the alphabet.</p>
 
-    <textarea id="input"></textarea><br><button id="submit">Encode</button><button id="submit1">Decode</button><br><textarea id="output" disabled></textarea>
+    <textarea id="input"></textarea><br><br>
+    <span>Controls: </span>
+    <button id="submit">Encode</button>
+    <button id="submit1">Decode</button>
+    <button id="submit2">Swap Value</button><br><br>
+    <textarea id="output" disabled></textarea>
 
     <article style="margin-top: 50px;">
         <b>Key:</b>
@@ -37,6 +72,21 @@
 
         document.getElementById("submit1").addEventListener("click", () => {
             document.getElementById("output").value = __.parse(document.getElementById("input").value, true)
+        })
+
+        let swap = false
+        document.getElementById("submit2").addEventListener("click", () => {
+            if (swap) {
+                let saved = document.getElementById("output").value
+                document.getElementById("output").value = document.getElementById("input").value
+                document.getElementById("input").value = saved
+            } else {
+                let saved = document.getElementById("input").value
+                document.getElementById("input").value = document.getElementById("output").value
+                document.getElementById("output").value = saved
+            }
+
+            swap = !swap
         })
     </script>
 </body>
