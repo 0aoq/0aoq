@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEWO ALPHABET TRANSLATOR</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <p>Decoding is not operational, please decode by learning the alphabet.</p>
+
+    <textarea id="input"></textarea><br><button id="submit">Encode</button><br><textarea id="output" disabled></textarea>
+
+    <article style="margin-top: 50px;">
+        <b>Key:</b>
+
+        <p>a b c d e f g h i j k l m n o p q r s t u v w x y z</p>
+        <p>r b k t o z m a w q n l i v x e s c j u f d g y p h</p>
+
+        <b>Special Character Letters:</b>
+        <p>i(w) = w'</p>
+        <p>e(o) = 'o</p>
+    </article>
+
+    <script src="zewo-alphabet.prototype.js"></script>
+    <script>
+        let __ = new ZewoAlphabet()
+        document.getElementById("submit").addEventListener("click", () => {
+            document.getElementById("output").value = __.parse(document.getElementById("input").value)
+        })
+    </script>
+</body>
+
+</html>
