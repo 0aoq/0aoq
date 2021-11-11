@@ -31,7 +31,7 @@ const alphabet = [ // letter replacements
 
 class ZewoAlphabet {
     constructor() {
-        this.illegal = `<>0123456789![](){}';:/$.,=-+*&^%$#@~"'| \n\r`
+        this.illegal = `<>0123456789![](){}';:/$.,=-+*&^%$#@~"'?| \n\r`
         this.checkIllegal = function(string) { return this.illegal.includes(string) }
 
         this.getLetter = function(l, reverse = false) {
