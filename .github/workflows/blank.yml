@@ -64,3 +64,11 @@ jobs:
           plugin_music_top_type: tracks
           plugin_music_user: hkau
           plugin_music_token: ${{ secrets.LASTFM_TOKEN }}
+          plugin_wakatime: yes
+          plugin_wakatime_days: 7
+          plugin_wakatime_limit: 5
+          plugin_wakatime_repositories_visibility: all
+          plugin_wakatime_sections: time, projects, projects-graphs, languages, languages-graphs, editors, os
+          plugin_wakatime_url: https://wakatime.com
+          plugin_wakatime_user: hkau
+          plugin_wakatime_token: ${{ secrets.WAKATIME_TOKEN }}
